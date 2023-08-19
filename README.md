@@ -1,1 +1,1 @@
-Just a playground to get use to javascript capabilites
+Just a playground to get used to javascript capabilities.
