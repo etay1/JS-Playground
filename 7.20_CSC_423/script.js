@@ -1,6 +1,7 @@
 function playGuessingGame(answer, totalGuesses = 10) {
     let guesses = 0;
     let previousGuess = null;
+    let validGuessMade = false;
 
     while (guesses < totalGuesses) {
         let message;
@@ -21,10 +22,13 @@ function playGuessingGame(answer, totalGuesses = 10) {
 
         var userGuess = parseFloat(userInput);
 
-        if (isNaN(userGuess) || userGuess < 1 || userGuess > 100 ||typeof userGuess != Number) {
-            prompt("Please enter a valid number between 1 and 100.");
+        if (isNaN(userGuess)) {
+            alert("Please enter a number.");
+        } else if (userGuess < 1 || userGuess > 100) {
+            alert("Please enter a valid number between 1 and 100.");
         } else {
             guesses++;
+            validGuessMade = true;
 
             if (userGuess < answer) {
                 previousGuess = userGuess;
@@ -38,6 +42,10 @@ function playGuessingGame(answer, totalGuesses = 10) {
         }
     }
 
-    console.log("Out of guesses. The answer was " + answer);
+    if (!validGuessMade) {
+        console.log("No valid guesses were made.");
+    } else {
+        console.log("Out of guesses. The answer was " + answer);
+    }
     return 0;
 }
