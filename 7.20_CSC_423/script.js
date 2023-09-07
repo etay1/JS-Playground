@@ -1,7 +1,6 @@
 function playGuessingGame(answer, totalGuesses = 10) {
     let guesses = 0;
     let previousGuess = null;
-    let validGuessMade = false;
 
     while (guesses < totalGuesses) {
         let message;
@@ -12,27 +11,29 @@ function playGuessingGame(answer, totalGuesses = 10) {
             message = `${previousGuess} is too small. Guess a larger number.`;
         } else if (previousGuess > answer) {
             message = `${previousGuess} is too large. Guess a smaller number.`;
+        } else if (previousGuess === undefined) {
+            message = "Please enter a number.";
         }
 
-        var userInput = prompt(message);
+        const userInput = prompt(message);
 
         if (userInput === null) {
             return 0;
         }
 
-        var userGuess = parseFloat(userInput);
+        const userGuess = parseFloat(userInput);
 
         if (isNaN(userGuess)) {
-            alert("Please enter a number.");
-        } else if (userGuess < 1 || userGuess > 100) {
-            alert("Please enter a valid number between 1 and 100.");
+            console.log("Please enter a number.");
+            previousGuess = undefined;
         } else {
             guesses++;
-            validGuessMade = true;
 
             if (userGuess < answer) {
+                console.log(`${userGuess} is too small. Guess a larger number.`);
                 previousGuess = userGuess;
             } else if (userGuess > answer) {
+                console.log(`${userGuess} is too large. Guess a smaller number.`);
                 previousGuess = userGuess;
             } else {
                 console.log(`You won! The answer was ${answer}`);
@@ -42,10 +43,6 @@ function playGuessingGame(answer, totalGuesses = 10) {
         }
     }
 
-    if (!validGuessMade) {
-        console.log("No valid guesses were made.");
-    } else {
-        console.log("Out of guesses. The answer was " + answer);
-    }
+    console.log("Out of guesses. The answer was " + answer);
     return 0;
 }
