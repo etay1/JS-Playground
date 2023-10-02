@@ -1,0 +1,64 @@
+-- Create the Exercise table
+CREATE TABLE exercise (
+    exerciseID SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    image BYTEA,
+    avgDurationPerRepetition INT,
+    avgCaloriesPerRepetition NUMERIC(10, 2)
+);
+
+
+-- Create the User table
+CREATE TABLE "user" (
+    userID SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    age INT,
+    image BYTEA,
+    currentWeight DECIMAL(5, 2)
+);
+
+
+-- Create the Workout table
+CREATE TABLE workout (
+    workoutID INT PRIMARY KEY AUTO_INCREMENT,
+    userID INT,
+    dateOfExercise DATE,
+    repetitions INT,
+    duration INT,
+    caloriesSpent DECIMAL(10, 2),
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+-- Create a table to represent the exercises included in each workout
+CREATE TABLE workoutExercise (
+    workoutID INT,
+    exerciseID INT,
+    PRIMARY KEY (WorkoutID, ExerciseID),
+    FOREIGN KEY (WorkoutID) REFERENCES Workout(WorkoutID),
+    FOREIGN KEY (ExerciseID) REFERENCES Exercise(ExerciseID)
+);
+
+
+-- history -----------------------------------------------------------------------------------------
+-- Create the UserWeightHistory table for recording weight history
+CREATE TABLE userWeightHistory (
+    WeightID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    Weight DECIMAL(5, 2) NOT NULL,
+    DateRecorded DATE NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+-- Create the UserWorkoutHistory table for recording workout history
+CREATE TABLE userWorkoutHistory (
+    WorkoutID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    DateOfExercise DATE,
+    Repetitions INT,
+    Duration INT,
+    CaloriesSpent DECIMAL(10, 2),
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
